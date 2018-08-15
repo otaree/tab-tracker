@@ -1,22 +1,25 @@
 <template>
-  <v-layout column>
-    <v-flex x6 offest-xs3>
-      <div class="white elevation-2">
-        <v-toolbar flat dense class="cyan" dark>
-          <v-toolbar-title>Register</v-toolbar-title>
-        </v-toolbar>
-        <div class="pl-4 pr-4 pt-2 pb-2">
-          <v-text-field v-model="email" type="email" name="email" placeholder="email" />
-          <br>
-          <v-text-field v-model="password" type="password" name="password" placeholder="password" />
-          <br>
-          <div class="error" v-html="error" />
-          <br>
-          <v-btn class="cyan" @click="register">Register</v-btn>
+  <v-container grid-list-xl text-xs-center>
+    <v-layout row wrap>
+      <v-flex   offset-md3 xs12 md6>
+        <div class="white elevation-2">
+          <v-toolbar flat dense class="cyan" dark>
+            <v-toolbar-title >Register</v-toolbar-title>
+          </v-toolbar>
+          <div class="pl-4 pr-4 pt-2 pb-2">
+
+            <v-text-field label="Email" v-model="email"></v-text-field>
+            <br>
+            <v-text-field label="password" v-model="password"></v-text-field>
+            <br>
+            <div class="error" v-html="error" />
+            <br>
+            <v-btn class="cyan" @click="register" dark>Register</v-btn>
+          </div>
         </div>
-      </div>
-    </v-flex>
-  </v-layout>
+      </v-flex>
+    </v-layout>
+  </v-container>
 </template>
 
 <script>
