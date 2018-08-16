@@ -24,7 +24,6 @@
 
 <script>
 import SongsService from '@/services/SongsService'
-import Panel from '@/components/Panel.vue'
 import SongMetadata from './SongMetadata.vue'
 import YouTube from './YouTube.vue'
 import Lyrics from './Lyrics.vue'
@@ -32,7 +31,6 @@ import Tab from './Tab.vue'
 
 export default {
   components: {
-    Panel,
     SongMetadata,
     YouTube,
     Lyrics,

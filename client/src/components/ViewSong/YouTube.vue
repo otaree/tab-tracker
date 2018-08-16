@@ -10,13 +10,8 @@
 </template>
 
 <script>
-import Panel from '@/components/Panel.vue'
-
 export default {
-  props: ['youtubeId'],
-  components: {
-    Panel
-  }
+  props: ['youtubeId']
 }
 </script>
 

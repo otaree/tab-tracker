@@ -15,14 +15,32 @@
             <v-btn
               dark
               class="cyan"
-              @click="navigateTo({
+              :to="{
                 name: 'song-edit',
-                params: {
-                  songId: song.id
+                params () {
+                  return { songId: song.id }
                 }
-              })"
+              }"
             >
               Edit
+            </v-btn>
+
+            <v-btn
+            v-if="isUserLoggedIn && !bookmark"
+              dark
+              class="cyan"
+              @click="setAsBookmark"
+            >
+              Set As Bookmark
+            </v-btn>
+
+            <v-btn
+              v-if="isUserLoggedIn && bookmark"
+              dark
+              class="cyan"
+              @click="unSetAsBookmark"
+            >
+              Unset As Bookmark
             </v-btn>
 
           </v-flex>
@@ -36,17 +54,51 @@
 </template>
 
 <script>
-import Panel from '@/components/Panel.vue'
+import { mapState } from 'vuex'
+import BookmarksService from '@/services/BookmarksService'
 
 export default {
-  components: {
-    Panel
-  },
   props: ['song'],
-  methods: {
-    navigateTo (route) {
-      this.$router.push(route)
+  data () {
+    return {
+      bookmark: null
     }
+  },
+  methods: {
+    async setAsBookmark () {
+      try {
+        this.bookmark = await (BookmarksService.post({
+          songId: this.song.id,
+          userId: this.$store.state.user.id
+        })).data
+      } catch (err) {
+        console.log(err)
+      }
+    },
+    async unSetAsBookmark () {
+      try {
+        await BookmarksService.delete(this.bookmark.id)
+        this.bookmark = null
+      } catch (err) {
+        console.log(err)
+      }
+    }
+  },
+  watch: {
+    async song () {
+      if (!this.isUserLoggedIn) {
+        return
+      }
+      this.bookmark = (await BookmarksService.index({
+        songId: this.song.id,
+        userId: this.$store.state.user.id
+      })).data
+    }
+  },
+  computed: {
+    ...mapState([
+      'isUserLoggedIn'
+    ])
   }
 }
 </script>
